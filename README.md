@@ -1,3 +1,5 @@
+A quick note: I stopped working on this before everything was all peachy and working perfectly. There's a lot of good code in place, but needs some loving, so "buyer" be ware :-)
+
 Reddit OAuth2 Strategy for OmniAuth 1.0.
 
 Supports the OAuth 2.0 server-side and client-side flows. Read the Reddit docs for more details: http://www.reddit.com/dev/api/oauth

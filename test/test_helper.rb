@@ -1,18 +1,13 @@
 require 'bundler/setup'
 require 'minitest/autorun'
 require 'mocha/setup'
+require 'rack/test'
+require 'webmock/minitest'
 require 'omniauth-reddit'
 require 'omniauth/strategies/reddit'
 
-OmniAuth.config.test_mode = true
-
 class StrategyTestCase < MiniTest::Unit::TestCase
   def setup
-    @request = stub('Request')
-    @request.stubs(:params).returns({})
-    @request.stubs(:cookies).returns({})
-    @request.stubs(:env).returns({})
-
     @client_id = 'rdt123'
     @client_secret = '53cr3tz'
   end
@@ -24,5 +19,18 @@ class StrategyTestCase < MiniTest::Unit::TestCase
         strategy.stubs(:request).returns(@request)
       end
     end
+  end
+end
+
+class StrategyIntegrationTestCase < MiniTest::Unit::TestCase
+  include Rack::Test::Methods
+
+  def app
+    Rack::Builder.new {
+      use OmniAuth::Builder do 
+        provider :reddit, "id", "secret"
+      end
+      run lambda { |env| [404, {'Content-Type' => 'text/plain'}, [env.key?('omniauth.auth').to_s]] }
+    }.to_app
   end
 end

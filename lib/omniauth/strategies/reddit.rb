@@ -27,9 +27,17 @@ module OmniAuth
       extra do
         {'raw_info' => raw_info}
       end
-
       def raw_info
-        @raw_info ||= access_token.get('/me').parsed || {}
+        @raw_info ||= access_token.get('/api/v1/me').parsed || {}
+      end
+
+      def build_access_token
+        options.token_params.merge!(:headers => {'Authorization' => basic_auth_header })
+        super
+      end
+
+      def basic_auth_header
+        "Basic " + Base64.strict_encode64("#{options[:client_id]}:#{options[:client_secret]}")
       end
 
     end

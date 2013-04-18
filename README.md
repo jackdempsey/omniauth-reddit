@@ -7,7 +7,7 @@ Supports the OAuth 2.0 server-side and client-side flows. Read the Reddit docs f
 Add to your `Gemfile`:
 
 ```ruby
-gem 'omniauth-reddit'
+gem 'omniauth-reddit', :git => 'git://github.com/jackdempsey/omniauth-reddit.git'
 ```
 
 Then `bundle install`.

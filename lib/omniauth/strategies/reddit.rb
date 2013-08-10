@@ -8,6 +8,7 @@ module OmniAuth
       #class NoAuthorizationCodeError < StandardError; end
 
       option :name, "reddit"
+      option :authorize_options, [:scope, :duration]
 
       option :client_options, {
         site: 'https://ssl.reddit.com',

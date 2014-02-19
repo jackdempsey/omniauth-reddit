@@ -11,7 +11,7 @@ module OmniAuth
       option :authorize_options, [:scope, :duration]
 
       option :client_options, {
-        site: 'https://ssl.reddit.com',
+        site: 'https://oauth.reddit.com',
         authorize_url: 'https://ssl.reddit.com/api/v1/authorize',
         token_url: 'https://ssl.reddit.com/api/v1/access_token'
       }

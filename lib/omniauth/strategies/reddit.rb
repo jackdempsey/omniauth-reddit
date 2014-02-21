@@ -11,8 +11,7 @@ module OmniAuth
       option :authorize_options, [:scope, :duration]
 
       option :client_options, {
-        site: 'https://ssl.reddit.com',
-        authorize_url: 'https://ssl.reddit.com/api/v1/authorize',
+        site: 'https://oauth.reddit.com',
         token_url: 'https://ssl.reddit.com/api/v1/access_token'
       }
 
@@ -40,6 +39,19 @@ module OmniAuth
       def basic_auth_header
         "Basic " + Base64.strict_encode64("#{options[:client_id]}:#{options[:client_secret]}")
       end
+
+      MOBILE_USER_AGENTS =  'webos|ipod|iphone|mobile'
+
+      def request_phase
+        options[:client_options].authorize_url = mobile_request? ? 'https://ssl.reddit.com/api/v1/authorize.compact' : 'https://ssl.reddit.com/api/v1/authorize'
+        super
+      end
+
+      def mobile_request?
+        ua = Rack::Request.new(@env).user_agent.to_s
+        ua.downcase =~ Regexp.new(MOBILE_USER_AGENTS)
+      end
+
 
     end
   end

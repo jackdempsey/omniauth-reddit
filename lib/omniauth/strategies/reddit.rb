@@ -48,7 +48,10 @@ module OmniAuth
         ua = Rack::Request.new(@env).user_agent.to_s
         ua.downcase =~ Regexp.new(MOBILE_USER_AGENTS)
       end
-
+      
+      def callback_url
+        options[:redirect_uri] || (full_host + script_name + callback_path)
+      end
 
     end
   end
